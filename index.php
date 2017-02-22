@@ -1,15 +1,52 @@
 <?php 
 include 'header.php';
-
-if (isset($_SESSION['id'])) {
-  $uid = $_SESSION['uid'];
-  $welcomeMsg = "Welcome " . $uid . "!<br />Way to go!<br />You are logged in!";
-  echo $welcomeMsg;
-} else {
-  echo "You are not logged in!";
-}
-
 ?>
+  <!-- container -->
+  <div class="container">
 
+    <!-- show congrats when logged in -->
+    <?php
+      if (isset($_SESSION['id'])) {
+        $uid = $_SESSION['uid']; ?>
+
+        <h1>Welcome <?php echo $uid; ?>!</h1>
+        <h2>Way to go!</h2>
+        <h2>You're logged in!</h2>
+
+      <?php } 
+      else { ?><!-- else show log in form -->
+
+        <?php 
+
+          /* Get url */
+          $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+          /* Makes and echoes message */
+          function msgSpanF($msg) {
+            $msgSpan = "<h2>" . $msg . "</h2>";
+            echo $msgSpan;   
+          }
+
+          if (strpos($url, 'success=sign-up') !== false) {
+            $msg = "You successfully signed up! Now you can log in to your account :)";
+            msgSpanF($msg);
+          } 
+          else {
+            $msg = "Please log in, or click above to sign up! :)";
+            msgSpanF($msg);
+          }
+
+        ?>
+
+        <!-- loginForm -->
+        <form id="loginForm" action='includes/login-inc.php' method='POST'>
+          <input class='inputs' type='text' name='uid' placeholder='Username' /><br />
+          <input class='inputs' type='password' name='pwd' placeholder='Password' /><br />
+          <button class='inputs subBtn' type='submit'>LOG IN</button>
+        </form><!-- /loginForm -->
+      <?php } 
+    ?>
+
+  </div><!-- /container -->
 </body>
 </html>

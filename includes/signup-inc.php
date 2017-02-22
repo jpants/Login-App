@@ -49,7 +49,7 @@ else {
               VALUES ('$first', '$last', '$uid', '$pwd')";
       $result = mysqli_query($conn, $sql);
 
-      header("Location: ../signup.php?success=sign-up");
+      header("Location: ../index.php?success=sign-up");
     }
   }
 }
