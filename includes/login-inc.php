@@ -1,9 +1,12 @@
 <?php 
 session_start();
+$_SESSION['uid'] = trim($_POST['uid']);
+$_SESSION['pwd'] = trim($_POST['pwd']);
+
 include '../dbh.php';
 
-$uid = $_POST['uid'];
-$pwd = $_POST['pwd'];
+$uid = trim($_POST['uid']);
+$pwd = trim($_POST['pwd']);
 
 if (empty($uid)) {
   header("Location: ../index.php?error=empty-uid");

@@ -4,11 +4,11 @@ session_start();
 
 include '../dbh.php';
 
-$first = $_POST['first'];
-$last  = $_POST['last'];
-$uid   = $_POST['uid'];
-$pwd   = $_POST['pwd'];
-$pwd2  = $_POST['pwd2'];
+$first = trim($_POST['first']);
+$last  = trim($_POST['last']);
+$uid   = trim($_POST['uid']);
+$pwd   = trim($_POST['pwd']);
+$pwd2  = trim($_POST['pwd2']);
 
 if (empty($first)) {
   header("Location: ../signup.php?error=empty-first");
