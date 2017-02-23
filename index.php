@@ -31,6 +31,26 @@ include 'header.php';
             $msg = "You successfully signed up! Now you can log in to your account :)";
             msgSpanF($msg);
           } 
+          else if (strpos($url, 'error=unOrPwd') !== false) {
+            $msg = "Your username or password is incorrect!";
+            msgSpanF($msg);
+          } 
+          else if (strpos($url, 'error=empty-uid') !== false) {
+            $msg = "The username field was empty!";
+            msgSpanF($msg);
+          }
+          else if (strpos($url, 'error=empty-pwd') !== false) {
+            $msg = "The password field was empty!";
+            msgSpanF($msg);
+          }
+          else if (strpos($url, 'error=noUn') !== false) {
+            $msg = "We don't have that username :(";
+            msgSpanF($msg);
+          }
+          else if (strpos($url, 'error=wrPwd') !== false) {
+            $msg = "Password incorrect :(";
+            msgSpanF($msg);
+          }
           else {
             $msg = "Please log in, or click above to sign up! :)";
             msgSpanF($msg);
