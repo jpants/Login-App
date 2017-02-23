@@ -20,11 +20,11 @@ if (has_header_injection($uid) || has_header_injection($pwd)) {
 // input validation 
 // check if empty 
 if (empty($uid)) {
-  header("Location: ../index.php?error=empty-uid");
+  header("Location: ../?error=empty-uid");
   exit();
 }
 else if (empty($pwd)) {
-  header("Location: ../index.php?error=empty-pwd");
+  header("Location: ../?error=empty-pwd");
   exit();
 }
 // check to see if username is in database 
@@ -34,7 +34,7 @@ else {
   $uidcheck = mysqli_num_rows($result);
 
   if ($uidcheck === 0) {
-    header("Location: ../index.php?error=noUn");
+    header("Location: ../?error=noUn");
     exit();
   } 
   // check to see if password belongs to username 
@@ -44,7 +44,7 @@ else {
     $row2 = mysqli_fetch_assoc($result2);
 
     if ($pwd !== $row2['pwd']) {
-      header("Location: ../index.php?error=wrPwd");
+      header("Location: ../?error=wrPwd");
       $_SESSION['pwd'] = "";
       exit();
     }
@@ -56,7 +56,7 @@ else {
 
       $_SESSION['id'] = $row3['id'];
       $_SESSION['uid'] = $row3['uid'];
-      header("Location: ../index.php");
+      header("Location: ../");
     }
   }
 }

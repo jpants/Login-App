@@ -74,7 +74,7 @@ else {
       $_SESSION['pwd'] = "";
       $_SESSION['pwd2'] = "";      
 
-      header("Location: ../index.php?success=sign-up");
+      header("Location: ../?success=sign-up");
     }
   }
 }

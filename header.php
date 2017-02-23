@@ -18,7 +18,7 @@ session_start();
   <nav>
     <ul>
       <!-- home button -->
-      <li><a href="index.php">HOME</a></li>
+      <li><a href="./">HOME</a></li>
 
       <!-- show log out button if logged in -->
       <?php 
