@@ -1,13 +1,24 @@
 <?php 
 session_start();
-$_SESSION['uid'] = trim($_POST['uid']);
-$_SESSION['pwd'] = trim($_POST['pwd']);
 
 include '../dbh.php';
+include '../functions.php';
 
-$uid = trim($_POST['uid']);
-$pwd = trim($_POST['pwd']);
+// Input variables 
+$uid = trim(mysqli_real_escape_string($conn, $_POST['uid']));
+$pwd = trim(mysqli_real_escape_string($conn, $_POST['pwd']));
 
+// Save session input values in case of error 
+$_SESSION['uid'] = $uid;
+$_SESSION['pwd'] = $pwd;
+
+// Check to see if inputs have header injections
+if (has_header_injection($uid) || has_header_injection($pwd)) {
+   die(); // if true, kill the script
+}
+
+// input validation 
+// check if empty 
 if (empty($uid)) {
   header("Location: ../index.php?error=empty-uid");
   exit();
@@ -16,6 +27,7 @@ else if (empty($pwd)) {
   header("Location: ../index.php?error=empty-pwd");
   exit();
 }
+// check to see if username is in database 
 else {
   $sql = "SELECT uid FROM user WHERE uid='$uid'";
   $result = mysqli_query($conn, $sql);
@@ -25,6 +37,7 @@ else {
     header("Location: ../index.php?error=noUn");
     exit();
   } 
+  // check to see if password belongs to username 
   else {
     $sql2 = "SELECT pwd FROM user WHERE uid='$uid'";
     $result2 = mysqli_query($conn, $sql2);
@@ -32,8 +45,10 @@ else {
 
     if ($pwd !== $row2['pwd']) {
       header("Location: ../index.php?error=wrPwd");
+      $_SESSION['pwd'] = "";
       exit();
     }
+    // success! get id and username from database and set them to session values and go to index.php 
     else {
       $sql3 = "SELECT * FROM user WHERE uid='$uid' AND pwd='$pwd'";
       $result3 = mysqli_query($conn, $sql3);

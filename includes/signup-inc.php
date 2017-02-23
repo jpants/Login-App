@@ -1,19 +1,30 @@
 <?php 
 session_start();
-$_SESSION['first'] = trim($_POST['first']);
-$_SESSION['last'] = trim($_POST['last']);
-$_SESSION['uid'] = trim($_POST['uid']);
-$_SESSION['pwd'] = trim($_POST['pwd']);
-$_SESSION['pwd2'] = trim($_POST['pwd2']);
 
 include '../dbh.php';
+include '../functions.php';
 
-$first = trim($_POST['first']);
-$last  = trim($_POST['last']);
-$uid   = trim($_POST['uid']);
-$pwd   = trim($_POST['pwd']);
-$pwd2  = trim($_POST['pwd2']);
+// input variables 
+$first = trim(mysqli_real_escape_string($conn, $_POST['first']));
+$last  = trim(mysqli_real_escape_string($conn, $_POST['last']));
+$uid   = trim(mysqli_real_escape_string($conn, $_POST['uid']));
+$pwd   = trim(mysqli_real_escape_string($conn, $_POST['pwd']));
+$pwd2  = trim(mysqli_real_escape_string($conn, $_POST['pwd2']));
 
+// Save session input values in case of error 
+$_SESSION['first'] = $first;
+$_SESSION['last'] = $last;
+$_SESSION['uid'] = $uid;
+$_SESSION['pwd'] = $pwd;
+$_SESSION['pwd2'] = $pwd2;
+
+// Check to see if inputs have header injections
+if (has_header_injection($first) || has_header_injection($last) || has_header_injection($uid) || has_header_injection($pwd) || has_header_injection($pwd2)) {
+  die(); // if true, kill the script
+}
+
+// input validation 
+// check if empty 
 if (empty($first)) {
   header("Location: ../signup.php?error=empty-first");
   exit();
@@ -34,6 +45,7 @@ else if (empty($pwd2)) {
   header("Location: ../signup.php?error=empty-pwd2");
   exit();
 }
+// check if username already exists 
 else {
   $sql = "SELECT uid FROM user WHERE uid='$uid'";
   $result = mysqli_query($conn, $sql);
@@ -43,23 +55,28 @@ else {
     header("Location: ../signup.php?error=username");
     exit();
   } 
+  // check if passwords match 
   else {
     if ($pwd !== $pwd2) {
       header("Location: ../signup.php?error=match-pwd");
       exit();
     }
+    // success! they are signed up, session values are reset, 
+    // and they are sent to index.php with congrats message 
     else {
       $sql = "INSERT INTO user (first, last, uid, pwd) 
               VALUES ('$first', '$last', '$uid', '$pwd')";
       $result = mysqli_query($conn, $sql);
+
+      $_SESSION['first'] = "";
+      $_SESSION['last'] = "";
+      $_SESSION['uid'] = "";
+      $_SESSION['pwd'] = "";
+      $_SESSION['pwd2'] = "";      
 
       header("Location: ../index.php?success=sign-up");
     }
   }
 }
 
-
-
-// header("Location: ../index.php");
-
- ?>
+?>

@@ -14,25 +14,32 @@ session_start();
 <body>
 
 <header>
+  <!-- nav bar -->
   <nav>
     <ul>
+      <!-- home button -->
       <li><a href="index.php">HOME</a></li>
 
+      <!-- show log out button if logged in -->
       <?php 
-        if (isset($_SESSION['id'])) { ?>
-          <form id='logOutForm' action='includes/logout-inc.php'>
-            <button>LOG OUT</button>
-          </form>
-        <?php } 
-      ?>
+      if (isset($_SESSION['id'])) { ?>
 
-      <?php 
-        $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (isset($_SESSION['id']) === false && strpos($url, 'signup.php') === false) { ?>
-          <li><a href="signup.php">SIGN UP</a></li>
-        <?php }
-      ?>
+        <form id='logOutForm' action='includes/logout-inc.php'>
+          <button>LOG OUT</button>
+        </form>
+
+      <?php }
+
+      // don't show sign up button if logged in or on sign up page
+      // get url
+      $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+      if (isset($_SESSION['id']) === false && strpos($url, 'signup.php') === false) { ?>
+
+        <li><a href="signup.php">SIGN UP</a></li>
+
+      <?php } ?>
 
     </ul>
-  </nav>
+  </nav><!-- /nav bar -->
 </header>
