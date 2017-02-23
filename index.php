@@ -62,7 +62,7 @@ include 'header.php';
 
         <!-- loginForm -->
         <form id="loginForm" action='includes/login-inc.php' method='POST'>
-          <input class='inputs' type='text' name='uid' placeholder='Username' value="<?php echo $_SESSION['uid'] ?>" /><br />
+          <input class='inputs' type='text' name='uid' placeholder='Username' value="<?php echo $_SESSION['uid'] ?>" autofocus /><br />
           <input class='inputs' type='password' name='pwd' placeholder='Password' value="<?php echo $_SESSION['pwd'] ?>" /><br />
           <button class='inputs subBtn' type='submit'>LOG IN</button>
         </form><!-- /loginForm -->

@@ -45,15 +45,22 @@ include 'header.php';
         $msg = "Your passwords didn't match!";
         msgSpanF($msg);
       }
+      else {
+        $_SESSION['first'] = "";
+        $_SESSION['last'] = "";
+        $_SESSION['uid'] = "";
+        $_SESSION['pwd'] = "";
+        $_SESSION['pwd2'] = "";
+      }
     ?>
 
     <!-- sign up form -->
     <form id='signUpForm' action='includes/signup-inc.php' method='POST'>
-      <input class='inputs' type='text' name='first' placeholder='First' /><br />
-      <input class='inputs' type='text' name='last' placeholder='Last' /><br />
-      <input class='inputs' type='text' name='uid' placeholder='Username' /><br />
-      <input class='inputs' type='password' name='pwd' placeholder='Password' /><br />
-      <input class='inputs' type='password' name='pwd2' placeholder='Retype Password' /><br />
+      <input class='inputs' type='text' name='first' placeholder='First' value="<?php echo $_SESSION['first']; ?>" autofocus /><br />
+      <input class='inputs' type='text' name='last' placeholder='Last' value="<?php echo $_SESSION['last']; ?>" /><br />
+      <input class='inputs' type='text' name='uid' placeholder='Username' value="<?php echo $_SESSION['uid']; ?>" /><br />
+      <input class='inputs' type='password' name='pwd' placeholder='Password' value="<?php echo $_SESSION['pwd']; ?>" /><br />
+      <input class='inputs' type='password' name='pwd2' placeholder='Retype Password' value="<?php echo $_SESSION['pwd2']; ?>" /><br />
       <button class='inputs subBtn' type='submit'>SIGN UP</button>
     </form><!-- /sign up form -->
   </div><!-- /container -->

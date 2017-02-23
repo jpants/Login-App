@@ -1,6 +1,10 @@
 <?php 
-
 session_start();
+$_SESSION['first'] = trim($_POST['first']);
+$_SESSION['last'] = trim($_POST['last']);
+$_SESSION['uid'] = trim($_POST['uid']);
+$_SESSION['pwd'] = trim($_POST['pwd']);
+$_SESSION['pwd2'] = trim($_POST['pwd2']);
 
 include '../dbh.php';
 
